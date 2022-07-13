@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="Model.ThuongHieu"/>
+    <fullyQualifiedTypeName name="java.sql.Date"/>
+    <fullyQualifiedTypeName name="Model.DonHang"/>
+    <fullyQualifiedTypeName name="DAO.DonHangDAO"/>
+    <fullyQualifiedTypeName name="Model.NguoiDung"/>
+    <fullyQualifiedTypeName name="DAO.NguoiDungDAO"/>
+    <fullyQualifiedTypeName name="DAO.MD5"/>
+</qualifiedTypeNameHistroy>

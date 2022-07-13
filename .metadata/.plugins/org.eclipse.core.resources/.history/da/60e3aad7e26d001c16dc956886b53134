@@ -1,0 +1,128 @@
+package DAO;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import Model.SanPham;
+import Model.ThuongHieu;
+import Model.User;
+public class ThuongHieuDAO {
+	public List<ThuongHieu> getList(){
+		List<ThuongHieu> list=new ArrayList<ThuongHieu>();
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT *	from thuonghieu");
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{
+					list.add( new SanPham(rs.getInt("id"),
+					rs.getString("tenthuonghieu")
+					rs.getString("hinhanh")));
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public ThuongHieu getThuongHieuByID(int id)
+	{
+		ThuongHieu thuonghieu=null;
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT * from thuonghieu WHERE id = ? ");
+			statement.setInt(1, id);
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{					
+					thuonghieu=new ThuongHieu(rs.getInt("id"),
+							rs.getString("tenthuonghieu"),
+							rs.getString("hinhanh"));	
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		return thuonghieu;
+	}
+/*
+	public void Order(int nguoidung_id,int sanpham_id, int soluong, float giaban, float tongtien)
+	{
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("INSERT INTO	donhang (nguoidung_id,sanpham_id,soluong,giaban,tongtien) values(?,?,?,?,?)");
+			statement.setInt(1, nguoidung_id);
+			statement.setInt(2, sanpham_id);
+			statement.setInt(3, soluong);
+			statement.setFloat(4, giaban);
+			statement.setFloat(5, tongtien);
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+*/
+	public void store(String tenthuonghieu, String hinhanh)
+	{
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("INSERT INTO	thuonghieu (tenthuonghieu,hinhanh) values(?,?)");
+			statement.setString(1, tenthuonghieu);
+			statement.setString(2, hinhanh);
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	/*
+	public void update(int id, String tensanpham,String mota, float giagoc, float giaban, int soluongton, String hinhanh, int luotxem, int luotmua) {
+		// TODO Auto-generated method stub
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("UPDATE sanpham SET tensanpham=?, mota=?, giagoc=?, giaban=?, soluongton=?,hinhanh=?, luotxem=?, luotmua=? where id=?");
+			statement.setString(1, tensanpham);
+			statement.setString(2, mota);
+			statement.setFloat(3, giagoc);
+			statement.setFloat(4, giaban);
+			statement.setFloat(5, soluongton);
+			statement.setString(6, hinhanh);
+			statement.setFloat(7, luotxem);
+			statement.setFloat(8, luotmua);
+			statement.setInt(9, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void delete(int id) {
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("DELETE FROM MONAN  where id=?");
+			statement.setInt(1, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
+}

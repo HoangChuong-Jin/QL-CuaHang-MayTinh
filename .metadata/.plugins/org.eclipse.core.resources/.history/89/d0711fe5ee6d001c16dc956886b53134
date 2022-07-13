@@ -1,0 +1,32 @@
+package Model;
+
+public class ThuongHieu {
+	int id;
+	String tenthuonghieu;
+	String hinhanh;
+	public ThuongHieu(int id, String tenthuonghieu, String hinhanh) {
+		super();
+		this.id = id;
+		this.tenthuonghieu = tenthuonghieu;
+		this.hinhanh = hinhanh;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getTenthuonghieu() {
+		return tenthuonghieu;
+	}
+	public void setTenthuonghieu(String tenthuonghieu) {
+		this.tenthuonghieu = tenthuonghieu;
+	}
+	public String getHinhanh() {
+		return hinhanh;
+	}
+	public void setHinhanh(String hinhanh) {
+		this.hinhanh = hinhanh;
+	}
+	
+}

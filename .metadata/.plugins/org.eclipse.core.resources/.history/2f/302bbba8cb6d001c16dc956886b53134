@@ -1,0 +1,139 @@
+package DAO;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import Model.SanPham;
+import Model.User;
+public class SanPhamDAO {
+	public List<SanPham> getList(){
+		List<SanPham> list=new ArrayList<SanPham>();
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT *	from sanpham");
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{
+					list.add( new SanPham(rs.getInt("id"),
+					rs.getString("tensanpham"),
+					rs.getString("mota"),
+					rs.getFloat("giagoc"),
+					rs.getFloat("giaban"),
+					rs.getInt("soluongton"),
+					rs.getString("hinhanh"),
+					rs.getInt("luotxem"),
+					rs.getInt("luotmua")));
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public SanPham getSanPhamByID(int id)
+	{
+		SanPham sanpham=null;
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT * from sanpham WHERE id = ? ");
+			statement.setInt(1, id);
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{					
+					sanpham=new SanPham(rs.getInt("id"),
+							rs.getString("tensanpham"),
+							rs.getString("mota"),
+							rs.getFloat("giagoc"),
+							rs.getFloat("giaban"),
+							rs.getInt("soluongton"),
+							rs.getString("hinhanh"),
+							rs.getInt("luotxem"),
+							rs.getInt("luotmua"));
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		return sanpham;
+	}
+
+	public void Order(int nguoidung_id,int sanpham_id, int soluong, float giaban, float tongtien)
+	{
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("INSERT INTO	donhang (nguoidung_id,sanpham_id,soluong,giaban,tongtien) values(?,?,?,?,?)");
+			statement.setInt(1, nguoidung_id);
+			statement.setInt(2, sanpham_id);
+			statement.setInt(3, soluong);
+			statement.setFloat(4, giaban);
+			statement.setFloat(5, tongtien);
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void store(String ten, String hinh,float gia)
+	{
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("INSERT INTO	sanpham (tensanpham,hinhanh,giaban) values(?,?,?)");
+			statement.setString(1, ten);
+			statement.setString(2, hinh);
+			statement.setFloat(3, gia);			
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void update(int id, String tensanpham,String mota, float giagoc, float giaban, int soluongton, String hinh, int luotxem, int luotmua) {
+		// TODO Auto-generated method stub
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("UPDATE sanpham SET tensanpham=?, mota=?, giagoc=?, giaban=?, soluongton=?, luotxem=?, luotmua=? where id=?");
+			statement.setString(1, tensanpham);
+			statement.setString(2, mota);
+			statement.setFloat(3, giagoc);
+			statement.setFloat(4, giaban);
+			statement.setFloat(5, soluongton);
+			statement.setFloat(6, luotxem);
+			statement.setFloat(7, luotmua);
+			statement.setInt(8, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+/*
+	public void delete(int id) {
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("DELETE FROM MONAN  where id=?");
+			statement.setInt(1, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
+}

@@ -1,0 +1,105 @@
+package DAO;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import Model.DonHang;
+import Model.SanPham;
+import Model.User;
+public class DonHangDAO {
+	public List<DonHang> getList(){
+		List<DonHang> list=new ArrayList<DonHang>();
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT dh.*,nd.hoten	from donhang dh, nguoidung nd where dh.nguoidung_id = nd.id");
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{
+					list.add( new DonHang(rs.getInt("id"),
+					rs.getInt("hoten"),
+					rs.getInt("sanpham_id"),
+					rs.getInt("soluong"),
+					rs.getFloat("giaban"),
+					rs.getDate("ngay"),
+					rs.getFloat("tongtien"),
+					rs.getString("ghichu"),
+					rs.getInt("trangthai")));
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public DonHang getDonHangByID(int id)
+	{
+		DonHang donhang=null;
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("SELECT * from donhang WHERE id = ? ");
+			statement.setInt(1, id);
+			ResultSet rs=db.executeQuery(statement);
+			if(rs!=null)
+			{
+				while(rs.next())
+				{					
+					donhang=new DonHang(rs.getInt("id"),
+							rs.getInt("nguoidung_id"),
+							rs.getInt("sanpham_id"),
+							rs.getInt("soluong"),
+							rs.getFloat("giaban"),
+							rs.getDate("ngay"),
+							rs.getFloat("tongtien"),
+							rs.getString("ghichu"),
+							rs.getInt("trangthai"));
+				}
+			}
+		} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+		return donhang;
+	}
+
+	public void update(int id, int soluong, float giaban, float tongtien, String ghichu, int trangthai) {
+		// TODO Auto-generated method stub
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("UPDATE donhang SET soluong=?,giaban=?,tongtien=?,ghichu=?,trangthai=? where id=?");
+			statement.setInt(1, soluong);
+			statement.setFloat(2, giaban);
+			statement.setFloat(3, tongtien);
+			statement.setString(4, ghichu);
+			statement.setInt(5, trangthai);
+			statement.setInt(6, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+/*
+	public void delete(int id) {
+		DBService db=new DBService();
+		PreparedStatement statement;
+		try {
+			statement = db.getConn().prepareStatement("DELETE FROM sanpham  where id=?");
+			statement.setInt(1, id);	
+			db.executeUpdate(statement);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	*/
+}

@@ -1,0 +1,26 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+ <%@ taglib uri="/struts-tags" prefix="s" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Thêm thương hiệu</title>
+
+</head>
+<body>
+	<h1>Thêm thương hiệu</h1>	
+	
+	<s:form action="storeThuongHieuAction" method="POST" enctype="multipart/form-data" validate="true">
+			
+	    <s:textfield label="Tên thương hiệu" id="tenthuonghieu" name="tenthuonghieu"  /> 
+		<s:file name="hinh" label="Chọn hình" accept="image/png, image/jpeg, image/gif"></s:file>
+		<s:submit/>
+	</s:form>	
+	
+	
+	<script>
+	
+	</script>
+</body>
+</html>

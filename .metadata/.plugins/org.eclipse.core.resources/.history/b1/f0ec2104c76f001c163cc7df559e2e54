@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Đăng kí tài khoản</title>
+</head>
+<body>
+		<form action="dangkyUser" method="POST">
+		            UserName:<input type="text" name="tendangnhap" /><br /> 
+		            Password:<input type="password" name="matkhau" /><br />
+		            <input type="submit" value="Login" />
+		 </form>
+		
+		    <s:if test="hasActionMessages()">
+		        <div class="welcome">
+		            <s:actionmessage /> 
+		        </div>
+		    </s:if>
+</body>
+</html>
